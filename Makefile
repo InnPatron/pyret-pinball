@@ -22,9 +22,11 @@ run: build
 server:
 	http-server $(OUTDIR)
 
-build: setup
-	anchor $(MAIN) -c
+build: setup pyret
 	browserify "$(OUT_MAIN)" -o $(JS_OUTDIR)/$(BUNDLED)
+
+pyret:
+	anchor $(MAIN) -c
 
 setup:
 	mkdir -p $(OUTDIR)
