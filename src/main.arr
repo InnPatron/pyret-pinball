@@ -20,6 +20,11 @@ main-table-horizontal-height = main-table-vertical-width
 main-table-horizontal-x = 0
 main-table-horizontal-y = main-table-vertical-height / 2
 
+separator-width = 16
+separator-height = main-table-vertical-height * (4 / 5)
+separator-x = main-table-vertical-x - 50
+separator-y = main-table-vertical-y - (main-table-vertical-height  * (1 / 10))
+
 table-depth = 15
 
 # World init
@@ -103,6 +108,21 @@ fun main-table():
       main-table-horizontal-height,
       table-depth
     )
+
+  separator-geom =
+    THREE.box-geom(
+      separator-width,
+      separator-height,
+      table-depth
+    )
+
+  separator-collider = 
+    MATTER.rectangle(
+      separator-x,
+      0 - separator-y,
+      separator-width,
+      separator-height,
+      true)
   
   left-vis = THREE.mesh(vertical-geom, table-mat)
   right-vis = THREE.mesh(vertical-geom, table-mat)
@@ -110,11 +130,14 @@ fun main-table():
   top-vis = THREE.mesh(horizontal-geom, table-mat)
   bottom-vis = THREE.mesh(horizontal-geom, table-mat)
 
+  separator-vis = THREE.mesh(separator-geom, table-mat)
+
   collider-list = [L.list:
     left-collider,
     right-collider,
     top-collider,
     bottom-collider,
+    separator-collider
   ]
 
   block:
@@ -128,6 +151,9 @@ fun main-table():
     THREE.scene-add(scene, top-vis)
     THREE.scene-add(scene, bottom-vis)
 
+    THREE.set-pos-x(separator-vis, separator-x)
+    THREE.set-pos-y(separator-vis, separator-y)
+    THREE.scene-add(scene, separator-vis)
 
     MATTER.add-to-world(engine, collider-list)
 
