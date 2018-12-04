@@ -10,6 +10,18 @@ import js-file("animate") as A
 ball-radius = 15
 sphere-segments = 15
 
+main-table-vertical-width = 20
+main-table-vertical-height = 800
+main-table-vertical-x = 500
+main-table-vertical-y = 0
+
+main-table-horizontal-width = 2 * main-table-vertical-x
+main-table-horizontal-height = main-table-vertical-width
+main-table-horizontal-x = 0
+main-table-horizontal-y = main-table-vertical-height / 2
+
+table-depth = 15
+
 # World init
 scene = THREE.scene()
 camera = THREE.perspective-camera-default()
@@ -39,7 +51,92 @@ fun ball():
   end
 end
 
+fun main-table():
+  table-mat = THREE.simple-mesh-basic-mat(12632256)
+
+  left-collider = 
+    MATTER.rectangle(
+      0 - main-table-vertical-x, 
+      main-table-vertical-y,
+      main-table-vertical-width,
+      main-table-vertical-height,
+      true
+    )
+
+  right-collider = 
+    MATTER.rectangle(
+      main-table-vertical-x, 
+      main-table-vertical-y,
+      main-table-vertical-width,
+      main-table-vertical-height,
+      true
+    )
+
+  bottom-collider = 
+    MATTER.rectangle(
+      main-table-horizontal-x, 
+      main-table-horizontal-y,    # Positive coordinates go down visually
+      main-table-horizontal-width,
+      main-table-horizontal-height,
+      true
+    )
+
+  top-collider = 
+    MATTER.rectangle(
+      main-table-horizontal-x, 
+      0 - main-table-horizontal-y,    # Positive coordinates go down visually
+      main-table-horizontal-width,
+      main-table-horizontal-height,
+      true
+    )
+
+  vertical-geom = 
+    THREE.box-geom(
+      main-table-vertical-width,
+      main-table-vertical-height,
+      table-depth
+    )
+
+  horizontal-geom = 
+    THREE.box-geom(
+      main-table-horizontal-width,
+      main-table-horizontal-height,
+      table-depth
+    )
+  
+  left-vis = THREE.mesh(vertical-geom, table-mat)
+  right-vis = THREE.mesh(vertical-geom, table-mat)
+
+  top-vis = THREE.mesh(horizontal-geom, table-mat)
+  bottom-vis = THREE.mesh(horizontal-geom, table-mat)
+
+  collider-list = [L.list:
+    left-collider,
+    right-collider,
+    top-collider,
+    bottom-collider,
+  ]
+
+  block:
+    THREE.set-pos-x(left-vis, 0 - main-table-vertical-x)
+    THREE.set-pos-x(right-vis, main-table-vertical-x)
+    THREE.scene-add(scene, left-vis)
+    THREE.scene-add(scene, right-vis)
+
+    THREE.set-pos-y(top-vis, main-table-horizontal-y)
+    THREE.set-pos-y(bottom-vis, 0 - main-table-horizontal-y)
+    THREE.scene-add(scene, top-vis)
+    THREE.scene-add(scene, bottom-vis)
+
+
+    MATTER.add-to-world(engine, collider-list)
+
+    nothing
+  end
+end
+
 shadow ball = ball()
+main-table()
 
 context = {
   to-update: [L.list: ball]
