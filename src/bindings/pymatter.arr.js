@@ -14,6 +14,10 @@ module.exports = {
     return MATTER.Bodies.rectangle(x, y, width, height, { isStatic: staticBody });
   },
 
+  'circle': function(x, y, radius, staticBody) {
+    return MATTER.Bodies.circle(x, y, radius, { isStatic: staticBody });
+  },
+
   'set-restitution': function(body, restitution) {
     body.restitution = restitution;
   },
