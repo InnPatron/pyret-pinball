@@ -37,11 +37,15 @@ module.exports = {
     return new THREE.BoxGeometry(width, height, depth);
   },
 
+  'sphere-geom': function(radius, widthSegments, heightSegments) {
+    return new THREE.SphereGeometry(radius, widthSegments, heightSegments);
+  },
+
   'simple-mesh-basic-mat': function(color) {
     return new THREE.MeshBasicMaterial( { color: color } );
   },
 
-  'cube': function(geom, material) {
+  'mesh': function(geom, material) {
     return new THREE.Mesh(geom, material);
   },
 
