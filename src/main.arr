@@ -12,7 +12,7 @@ sphere-segments = 15
 
 main-table-vertical-width = 20
 main-table-vertical-height = 800
-main-table-vertical-x = 500
+main-table-vertical-x = 300
 main-table-vertical-y = 0
 
 main-table-horizontal-width = 2 * main-table-vertical-x
