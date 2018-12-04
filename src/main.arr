@@ -25,7 +25,7 @@ separator-height = main-table-vertical-height * (4 / 5)
 separator-x = main-table-vertical-x - 50
 separator-y = main-table-vertical-y - (main-table-vertical-height  * (1 / 10))
 
-table-depth = 15
+table-depth = 1
 
 # World init
 scene = THREE.scene()
