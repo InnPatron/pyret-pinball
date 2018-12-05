@@ -27,6 +27,8 @@ separator-y = main-table-vertical-y - (main-table-vertical-height  * (1 / 10))
 
 table-depth = 1
 
+launch-speed = 35
+
 # World init
 scene = THREE.scene()
 camera = THREE.perspective-camera-default()
@@ -53,6 +55,17 @@ fun ball():
       vis: ball-vis,
       col: ball-collider 
     }
+  end
+end
+
+fun launch-ball(shadow ball):
+  collider = ball.col
+  launch-x = main-table-vertical-x - (main-table-vertical-width / 2) - ball-radius
+  launch-y = main-table-horizontal-y - (main-table-horizontal-height) - ball-radius
+
+  block: 
+    MATTER.set-pos(collider, launch-x, launch-y)
+    MATTER.set-velocity(collider, 0, 0 - launch-speed)
   end
 end
 
@@ -186,6 +199,8 @@ animator = lam(shadow context):
   end
 
 end
+
+launch-ball(ball)
 
 MATTER.run-engine(runner, engine)
 
