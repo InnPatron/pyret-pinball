@@ -29,6 +29,9 @@ table-depth = 1
 
 launch-speed = 35
 
+bumper-radius = 20
+bumper-bounce = 8 / 5
+
 # World init
 scene = THREE.scene()
 camera = THREE.perspective-camera-default()
@@ -100,6 +103,24 @@ fun bouncer(table-mat):
 
     THREE.scene-add(scene, bouncer-vis)
     MATTER.add-to-world(engine, [L.list: bouncer-collider])
+  end
+end
+
+fun bumper(x, y, bumper-mat):
+
+  collider = MATTER.circle(x, 0 - y, bumper-radius, true)
+  bumper-geom = THREE.sphere-geom(bumper-radius, sphere-segments, sphere-segments)
+
+  bumper-vis = THREE.mesh(bumper-geom, bumper-mat)
+
+  block: 
+    THREE.set-pos-x(bumper-vis, x)
+    THREE.set-pos-y(bumper-vis, y)
+
+    MATTER.set-restitution(collider, bumper-bounce)
+
+    THREE.scene-add(scene, bumper-vis)
+    MATTER.add-to-world(engine, [L.list: collider])
   end
 end
 
