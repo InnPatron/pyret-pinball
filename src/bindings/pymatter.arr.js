@@ -42,4 +42,24 @@ module.exports = {
   'get-pos': function(body) {
     return MATTER.Vector.clone(body.position);
   },
+
+  'get-pos-x': function(body) {
+    return body.position.x;
+  },
+
+  'get-pos-y': function(body) {
+    return body.position.y;
+  },
+
+  'set-pos': function(body, x, y) {
+    return MATTER.Body.setPosition(body, { x: x, y: y });
+  },
+
+  'set-pos-x': function(body, x) {
+    return MATTER.Body.setPosition(body, { x: x, y: body.position.y });
+  },
+
+  'set-pos-y': function(body, y) {
+    return MATTER.Body.setPosition(body, { x: body.position.x, y: y });
+  }
 };
