@@ -93,6 +93,10 @@ module.exports = {
     obj3d.rotation.z = z;
   },
 
+  'deg-to-rad': function(deg) {
+    return THREE.Math.degToRad(deg);
+  },
+
   'scene-add': function(scene, obj3d) {
     scene.add(obj3d);
   },
