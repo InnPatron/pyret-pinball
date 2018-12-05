@@ -31,6 +31,11 @@ launch-speed = 35
 
 bumper-radius = 20
 bumper-bounce = 8 / 5
+bumper-buffer = 20
+bumper-space = (main-table-horizontal-width - separator-x - separator-width)  / 3
+
+bumper-color = 1671168
+bumper-y = 250
 
 # World init
 scene = THREE.scene()
@@ -126,6 +131,7 @@ end
 
 fun main-table():
   table-mat = THREE.simple-mesh-basic-mat(12632256)
+  bumper-mat = THREE.simple-mesh-basic-mat(bumper-color)
 
   left-collider = 
     MATTER.rectangle(
@@ -226,6 +232,10 @@ fun main-table():
     MATTER.add-to-world(engine, collider-list)
 
     bouncer(table-mat)
+
+    bumper(0, bumper-y, bumper-mat)
+    bumper(bumper-space, bumper-y, bumper-mat)
+    bumper(0 - bumper-space, bumper-y, bumper-mat)
 
     nothing
   end
