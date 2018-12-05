@@ -61,5 +61,9 @@ module.exports = {
 
   'set-pos-y': function(body, y) {
     return MATTER.Body.setPosition(body, { x: body.position.x, y: y });
+  },
+
+  'set-velocity': function(body, x, y) {
+    MATTER.Body.setVelocity(body, { x: x, y: y });
   }
 };
