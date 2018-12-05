@@ -63,6 +63,10 @@ module.exports = {
     return MATTER.Body.setPosition(body, { x: body.position.x, y: y });
   },
 
+  'set-angle': function(body, radians) {
+    MATTER.Body.setAngle(body, radians);
+  },
+
   'set-velocity': function(body, x, y) {
     MATTER.Body.setVelocity(body, { x: x, y: y });
   }
