@@ -69,6 +69,40 @@ fun launch-ball(shadow ball):
   end
 end
 
+fun bouncer(table-mat):
+
+  bouncer-shift = 10
+  bouncer-width = 15
+  bouncer-height = 50
+  
+  radians = THREE.deg-to-rad(30)
+
+  bouncer-collider = MATTER.rectangle(0, 0, bouncer-width, bouncer-height, true)
+
+  bouncer-geom = THREE.box-geom(bouncer-width, bouncer-height, table-depth)
+  bouncer-vis = THREE.mesh(bouncer-geom, table-mat)
+
+  block: 
+    THREE.set-pos(
+      bouncer-vis, 
+      (main-table-vertical-x - bouncer-width) + bouncer-shift, 
+      (main-table-vertical-height / 2) - (bouncer-height / 2),
+      0
+    )
+    THREE.set-rot-z(bouncer-vis, radians)
+
+    MATTER.set-pos(
+      bouncer-collider, 
+      (main-table-vertical-x - bouncer-width) + bouncer-shift,
+      0 - ((main-table-vertical-height / 2) - (bouncer-height / 2))
+    ) 
+    MATTER.set-angle(bouncer-collider, radians)
+
+    THREE.scene-add(scene, bouncer-vis)
+    MATTER.add-to-world(engine, [L.list: bouncer-collider])
+  end
+end
+
 fun main-table():
   table-mat = THREE.simple-mesh-basic-mat(12632256)
 
@@ -169,6 +203,8 @@ fun main-table():
     THREE.scene-add(scene, separator-vis)
 
     MATTER.add-to-world(engine, collider-list)
+
+    bouncer(table-mat)
 
     nothing
   end
