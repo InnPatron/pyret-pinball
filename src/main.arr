@@ -104,7 +104,7 @@ fun bouncer(table-mat):
       (main-table-vertical-x - bouncer-width) + bouncer-shift,
       0 - ((main-table-vertical-height / 2) - (bouncer-height / 2))
     ) 
-    MATTER.set-angle(bouncer-collider, radians)
+    MATTER.set-angle(bouncer-collider, 0 - radians)
 
     THREE.scene-add(scene, bouncer-vis)
     MATTER.add-to-world(engine, [L.list: bouncer-collider])
