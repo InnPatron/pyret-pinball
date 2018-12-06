@@ -129,6 +129,62 @@ fun bumper(x, y, bumper-mat):
   end
 end
 
+fun funnels(table-mat):
+  radians = THREE.deg-to-rad(90)
+
+  funnel-length = 120
+
+  left-collider = MATTER.trapezoid(
+    (0 - main-table-vertical-x) + (funnel-length / 2), 
+    0,
+    funnel-length,
+    funnel-length,
+    1 / 2,
+    true
+  )
+
+  right-collider = MATTER.trapezoid(
+    separator-x - (funnel-length / 2), 
+    0,
+    funnel-length,
+    funnel-length,
+    1 / 2,
+    true
+  )
+
+  block: 
+
+    funnel-shape = THREE.shape()
+    THREE.shape-move-to(funnel-shape, 0 - (funnel-length / 2), 0 - (funnel-length / 2))
+    THREE.shape-line-to(funnel-shape, funnel-length / 2, 0 - (funnel-length / 2))
+    THREE.shape-line-to(funnel-shape, 3 * (funnel-length / 4), funnel-length / 2)
+    THREE.shape-line-to(funnel-shape, 0 - (3 * (funnel-length / 4)), funnel-length / 2)
+    THREE.shape-line-to(funnel-shape, 0 - (funnel-length / 2), 0 - (funnel-length / 2))
+
+    funnel-geom = THREE.shape-geom(funnel-shape)
+
+    left-vis = THREE.mesh(funnel-geom, table-mat)
+    right-vis = THREE.mesh(funnel-geom, table-mat)
+    
+    THREE.set-pos(left-vis, (0 - main-table-vertical-x) + (funnel-length / 2), 0, 0)
+    THREE.set-pos(right-vis, separator-x - (funnel-length / 2), 0, 0)
+
+    THREE.set-rot-z(left-vis, radians)
+    THREE.set-rot-z(right-vis, 0 - radians)
+
+    MATTER.set-restitution(left-collider, 111 / 110)
+    MATTER.set-restitution(right-collider, 111 / 110)
+    MATTER.set-angle(left-collider, radians)
+    MATTER.set-angle(right-collider, 0 - radians)
+
+    MATTER.add-to-world(engine, [L.list: left-collider, right-collider])
+
+    THREE.scene-add(scene, left-vis)
+    THREE.scene-add(scene, right-vis)
+
+  end
+end
+
 fun main-table():
   table-mat = THREE.simple-mesh-basic-mat(12632256)
   bumper-mat = THREE.simple-mesh-basic-mat(bumper-color)
@@ -236,6 +292,8 @@ fun main-table():
     bumper(0, bumper-y, bumper-mat)
     bumper(bumper-space, bumper-y, bumper-mat)
     bumper(0 - bumper-space, bumper-y, bumper-mat)
+
+    funnels(table-mat)
 
     nothing
   end
