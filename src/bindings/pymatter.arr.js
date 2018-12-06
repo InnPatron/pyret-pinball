@@ -22,6 +22,10 @@ module.exports = {
     return MATTER.Bodies.polygon(x, y, sides, radius, { isStatic: staticBody });
   },
 
+  'trapezoid': function(x, y, width, height, slope, staticBody) {
+    return MATTER.Bodies.trapezoid(x, y, width, height, slope, { isStatic: staticBody });
+  },
+
   'set-restitution': function(body, restitution) {
     body.restitution = restitution;
   },
