@@ -18,6 +18,10 @@ module.exports = {
     return MATTER.Bodies.circle(x, y, radius, { isStatic: staticBody });
   },
 
+  'polygon': function(x, y, sides, radius, staticBody) {
+    return MATTER.Bodies.polygon(x, y, sides, radius, { isStatic: staticBody });
+  },
+
   'set-restitution': function(body, restitution) {
     body.restitution = restitution;
   },
