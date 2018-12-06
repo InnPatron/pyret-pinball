@@ -41,6 +41,22 @@ module.exports = {
     return new THREE.SphereGeometry(radius, widthSegments, heightSegments);
   },
 
+  'shape-geom': function(shape) {
+    return new THREE.ShapeGeometry(shape);
+  },
+
+  'shape': function() {
+    return new THREE.Shape();
+  },
+
+  'shape-move-to': function(shape, x, y) {
+    shape.moveTo(x, y);
+  },
+
+  'shape-line-to': function(shape, x, y) {
+    shape.lineTo(x, y);
+  },
+
   'simple-mesh-basic-mat': function(color) {
     return new THREE.MeshBasicMaterial( { color: color } );
   },
@@ -104,4 +120,5 @@ module.exports = {
   'render': function(renderer, scene, camera) {
     renderer.render( scene, camera );
   },
+
 };
